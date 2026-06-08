@@ -1,0 +1,20 @@
+{% extends "accounts/base_auth.html" %}
+
+{% block title %}Delete account — RealTimeChat{% endblock %}
+{% block heading %}Delete your account{% endblock %}
+{% block subheading %}This action is permanent and cannot be undone{% endblock %}
+
+{% block content %}
+<p class="auth-warning">
+  All your messages and profile data will be permanently removed.
+</p>
+
+<form method="post" novalidate>
+  {% csrf_token %}
+  <button type="submit" class="btn btn--danger btn--full">Yes, delete my account</button>
+</form>
+
+<p class="auth-switch">
+  <a href="{% url 'rooms:lobby' %}">Cancel, take me back</a>
+</p>
+{% endblock %}

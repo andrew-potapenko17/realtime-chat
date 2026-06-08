@@ -1,0 +1,45 @@
+{% extends "rooms/base.html" %}
+
+{% block title %}New room — RealTimeChat{% endblock %}
+{% block nav_create %}sidebar__link--active{% endblock %}
+
+{% block content %}
+<div class="form-page">
+  <div class="form-page__header">
+    <h1 class="page-title">Create a room</h1>
+    <p class="page-subtitle">Rooms are where your team communicates.</p>
+  </div>
+
+  <form method="post" class="form-card" novalidate>
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="{{ form.name.id_for_label }}">Room name</label>
+      {{ form.name }}
+      {% if form.name.errors %}
+        <p class="field-error">{{ form.name.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.description.id_for_label }}">Description <span class="label-optional">(optional)</span></label>
+      {{ form.description }}
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.room_type.id_for_label }}">Type</label>
+      {{ form.room_type }}
+    </div>
+
+    <div class="form-group form-group--inline">
+      {{ form.is_private }}
+      <label for="{{ form.is_private.id_for_label }}">Make this room private</label>
+    </div>
+
+    <div class="form-actions">
+      <a href="{% url 'rooms:lobby' %}" class="btn btn--ghost">Cancel</a>
+      <button type="submit" class="btn btn--primary">Create room</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

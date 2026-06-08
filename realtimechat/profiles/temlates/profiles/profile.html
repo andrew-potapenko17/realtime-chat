@@ -1,0 +1,45 @@
+{% extends "rooms/base.html" %}
+{% load static %}
+
+{% block title %}{{ profile_user.username }} — RealTimeChat{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/profiles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+
+  <div class="profile-card">
+
+    <div class="profile-card__avatar">
+      {% if profile.avatar %}
+        <img src="{{ profile.avatar.url }}" alt="{{ profile_user.username }}" class="avatar-img avatar-img--lg">
+      {% else %}
+        <div class="avatar avatar--lg">{{ profile_user.username|first|upper }}</div>
+      {% endif %}
+
+      <div class="profile-card__presence {% if profile.is_online %}presence--online{% else %}presence--offline{% endif %}">
+        {% if profile.is_online %}Online{% else %}Last seen {{ profile.last_seen|timesince }} ago{% endif %}
+      </div>
+    </div>
+
+    <div class="profile-card__body">
+      <h1 class="profile-card__username">{{ profile_user.username }}</h1>
+      <p class="profile-card__email">{{ profile_user.email }}</p>
+      {% if profile.bio %}
+        <p class="profile-card__bio">{{ profile.bio }}</p>
+      {% endif %}
+      <p class="profile-card__joined">Joined {{ profile_user.date_joined|date:"F Y" }}</p>
+    </div>
+
+    {% if is_own_profile %}
+      <div class="profile-card__actions">
+        <a href="{% url 'profiles:edit' %}" class="btn btn--primary">Edit profile</a>
+      </div>
+    {% endif %}
+
+  </div>
+
+</div>
+{% endblock %}

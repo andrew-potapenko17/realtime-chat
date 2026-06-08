@@ -1,0 +1,38 @@
+{% extends "accounts/base_auth.html" %}
+
+{% block title %}Sign in — RealTimeChat{% endblock %}
+{% block heading %}Welcome back{% endblock %}
+{% block subheading %}Sign in to your account{% endblock %}
+
+{% block content %}
+<form method="post" novalidate>
+  {% csrf_token %}
+
+  <div class="form-group">
+    <label for="{{ form.username.id_for_label }}">Email</label>
+    {{ form.username }}
+    {% if form.username.errors %}
+      <p class="field-error">{{ form.username.errors.0 }}</p>
+    {% endif %}
+  </div>
+
+  <div class="form-group">
+    <label for="{{ form.password.id_for_label }}">Password</label>
+    {{ form.password }}
+    {% if form.password.errors %}
+      <p class="field-error">{{ form.password.errors.0 }}</p>
+    {% endif %}
+  </div>
+
+  {% if form.non_field_errors %}
+    <p class="field-error">{{ form.non_field_errors.0 }}</p>
+  {% endif %}
+
+  <button type="submit" class="btn btn--primary btn--full">Sign in</button>
+</form>
+
+<p class="auth-switch">
+  Don't have an account?
+  <a href="{% url 'accounts:register' %}">Create one</a>
+</p>
+{% endblock %}

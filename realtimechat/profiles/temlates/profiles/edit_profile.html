@@ -1,0 +1,71 @@
+{% extends "rooms/base.html" %}
+{% load static %}
+
+{% block title %}Edit profile — RealTimeChat{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/profiles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-page">
+
+  <div class="form-page__header">
+    <h1 class="page-title">Edit profile</h1>
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="form-card" novalidate>
+    {% csrf_token %}
+
+    <!-- Avatar preview -->
+    <div class="avatar-upload">
+      {% if profile.avatar %}
+        <img src="{{ profile.avatar.url }}" alt="Current avatar" class="avatar-img avatar-img--lg">
+      {% else %}
+        <div class="avatar avatar--lg">{{ request.user.username|first|upper }}</div>
+      {% endif %}
+
+      <div class="avatar-upload__controls">
+        <label class="btn btn--ghost btn--sm" for="{{ form.avatar.id_for_label }}">
+          Change avatar
+        </label>
+        {{ form.avatar }}
+        {% if form.avatar.errors %}
+          <p class="field-error">{{ form.avatar.errors.0 }}</p>
+        {% endif %}
+        {% if profile.avatar %}
+          <form method="post" action="{% url 'profiles:remove-avatar' %}" style="display:inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn--ghost btn--sm btn--danger-ghost">Remove</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="{{ form.bio.id_for_label }}">
+        Bio <span class="label-optional">({{ profile.bio|length }}/160)</span>
+      </label>
+      {{ form.bio }}
+      {% if form.bio.errors %}
+        <p class="field-error">{{ form.bio.errors.0 }}</p>
+      {% endif %}
+    </div>
+
+    <div class="form-actions">
+      <a href="{% url 'profiles:profile' username=request.user.username %}" class="btn btn--ghost">Cancel</a>
+      <button type="submit" class="btn btn--primary">Save changes</button>
+    </div>
+
+  </form>
+
+  <div class="danger-zone" style="margin-top:2rem">
+    <div>
+      <p class="danger-zone__title">Delete account</p>
+      <p class="danger-zone__desc">Permanently remove your account and all data.</p>
+    </div>
+    <a href="{% url 'accounts:delete' %}" class="btn btn--danger">Delete account</a>
+  </div>
+
+</div>
+{% endblock %}

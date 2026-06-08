@@ -1,0 +1,61 @@
+{% extends "rooms/base.html" %}
+
+{% block title %}Lobby — RealTimeChat{% endblock %}
+{% block nav_lobby %}sidebar__link--active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Lobby</h1>
+  <a href="{% url 'rooms:create' %}" class="btn btn--primary">+ New room</a>
+</div>
+
+{% if my_rooms %}
+  <section class="room-section">
+    <h2 class="room-section__title">Your rooms</h2>
+    <ul class="room-list">
+      {% for room in my_rooms %}
+        <li class="room-card">
+          <a href="{% url 'rooms:detail' room.slug %}" class="room-card__link">
+            <div class="room-card__icon">#</div>
+            <div class="room-card__body">
+              <span class="room-card__name">{{ room.name }}</span>
+              {% if room.description %}
+                <span class="room-card__desc">{{ room.description }}</span>
+              {% endif %}
+            </div>
+            <span class="room-card__badge room-card__badge--{{ room.room_type }}">
+              {{ room.get_room_type_display }}
+            </span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+{% if public_rooms %}
+  <section class="room-section">
+    <h2 class="room-section__title">Discover rooms</h2>
+    <ul class="room-list">
+      {% for room in public_rooms %}
+        <li class="room-card">
+          <div class="room-card__icon room-card__icon--muted">#</div>
+          <div class="room-card__body">
+            <span class="room-card__name">{{ room.name }}</span>
+            {% if room.description %}
+              <span class="room-card__desc">{{ room.description }}</span>
+            {% endif %}
+          </div>
+          <a href="{% url 'rooms:join' room.slug %}" class="btn btn--sm btn--ghost">Join</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+{% if not my_rooms and not public_rooms %}
+  <div class="empty-state">
+    <p>No rooms yet. <a href="{% url 'rooms:create' %}">Create the first one →</a></p>
+  </div>
+{% endif %}
+{% endblock %}

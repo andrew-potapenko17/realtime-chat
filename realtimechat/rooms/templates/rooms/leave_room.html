@@ -1,0 +1,19 @@
+{% extends "rooms/base.html" %}
+
+{% block title %}Leave #{{ room.name }} — RealTimeChat{% endblock %}
+
+{% block content %}
+<div class="form-page">
+  <div class="confirm-card">
+    <h1 class="confirm-card__title">Leave #{{ room.name }}?</h1>
+    <p class="confirm-card__body">
+      You'll need to be invited back to rejoin if the room is private.
+    </p>
+    <form method="post" class="confirm-card__actions">
+      {% csrf_token %}
+      <a href="{% url 'rooms:detail' room.slug %}" class="btn btn--ghost">Cancel</a>
+      <button type="submit" class="btn btn--danger">Leave room</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

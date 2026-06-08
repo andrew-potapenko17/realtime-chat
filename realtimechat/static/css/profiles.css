@@ -1,0 +1,105 @@
+/* profiles.css — loaded only on profile pages */
+
+.profile-page {
+    max-width: 560px;
+  }
+  
+  /* ── Profile card ─────────────────────────────────────────────────────────── */
+  .profile-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .profile-card__avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  
+  .avatar-img {
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  
+  .avatar-img--lg { width: 80px; height: 80px; }
+  .avatar--lg     { width: 80px; height: 80px; font-size: 1.75rem; }
+  
+  .profile-card__presence {
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  .profile-card__presence::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  
+  .presence--online  { color: #4ade80; }
+  .presence--online::before  { background: #4ade80; }
+  .presence--offline { color: var(--color-text-muted); }
+  .presence--offline::before { background: var(--color-text-subtle); }
+  
+  .profile-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  
+  .profile-card__username {
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+  
+  .profile-card__email {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+  }
+  
+  .profile-card__bio {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+  
+  .profile-card__joined {
+    font-size: 0.8rem;
+    color: var(--color-text-subtle);
+    margin-top: 0.25rem;
+  }
+  
+  .profile-card__actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  /* ── Avatar upload ────────────────────────────────────────────────────────── */
+  .avatar-upload {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  
+  .avatar-upload__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  /* Hide the default file input — triggered by the label button */
+  .avatar-upload input[type="file"] {
+    display: none;
+  }

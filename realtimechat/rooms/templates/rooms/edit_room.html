@@ -1,0 +1,36 @@
+{% extends "rooms/base.html" %}
+
+{% block title %}Edit #{{ room.name }} — RealTimeChat{% endblock %}
+
+{% block content %}
+<div class="form-page">
+  <div class="form-page__header">
+    <h1 class="page-title">Edit #{{ room.name }}</h1>
+  </div>
+
+  <form method="post" class="form-card" novalidate>
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label for="{{ form.description.id_for_label }}">Description <span class="label-optional">(optional)</span></label>
+      {{ form.description }}
+    </div>
+
+    <div class="form-group form-group--inline">
+      {{ form.is_private }}
+      <label for="{{ form.is_private.id_for_label }}">Make this room private</label>
+    </div>
+
+    <div class="form-actions">
+      <a href="{% url 'rooms:detail' room.slug %}" class="btn btn--ghost">Cancel</a>
+      <button type="submit" class="btn btn--primary">Save changes</button>
+    </div>
+  </form>
+
+  <div class="danger-zone">
+    <h3 class="danger-zone__title">Danger zone</h3>
+    <p class="danger-zone__desc">Permanently delete this room and all its messages.</p>
+    <a href="{% url 'rooms:delete' room.slug %}" class="btn btn--danger">Delete room</a>
+  </div>
+</div>
+{% endblock %}

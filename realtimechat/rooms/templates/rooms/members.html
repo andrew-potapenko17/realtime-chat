@@ -1,0 +1,29 @@
+{% extends "rooms/base.html" %}
+
+{% block title %}Members · #{{ room.name }} — RealTimeChat{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Members · #{{ room.name }}</h1>
+    <p class="page-subtitle">{{ memberships.count }} member{{ memberships.count|pluralize }}</p>
+  </div>
+  <a href="{% url 'rooms:detail' room.slug %}" class="btn btn--ghost">← Back to room</a>
+</div>
+
+<ul class="member-list">
+  {% for m in memberships %}
+    <li class="member-card">
+      <div class="avatar avatar--md">{{ m.user.username|first|upper }}</div>
+      <div class="member-card__body">
+        <span class="member-card__name">
+          {{ m.user.username }}
+          {% if m.user == request.user %}<span class="label-you">you</span>{% endif %}
+        </span>
+        <span class="member-card__email">{{ m.user.email }}</span>
+      </div>
+      <span class="role-badge role-badge--{{ m.role }}">{{ m.get_role_display }}</span>
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
