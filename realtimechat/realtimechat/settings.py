@@ -99,10 +99,15 @@ TEMPLATES[0]["OPTIONS"]["context_processors"] += [
 # ── Database ───────────────────────────────────────────────────────────────────
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL"),
-        conn_max_age=60,
-    )
+    "default": {
+        "ENGINE": os.getenv("DB_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.getenv("DB_NAME", str(BASE_DIR / "db.sqlite3")),
+        "USER": os.getenv("DB_USER", ""),
+        "PASSWORD": os.getenv("DB_PASSWORD", ""),
+        "HOST": os.getenv("DB_HOST", ""),
+        "PORT": os.getenv("DB_PORT", ""),
+        "CONN_MAX_AGE": 60,
+    }
 }
 
 
@@ -130,7 +135,9 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [os.getenv("REDIS_URL", "redis://127.0.0.1:6379")],
+            "hosts": [
+                (os.getenv("REDIS_HOST", "127.0.0.1"), int(os.getenv("REDIS_PORT", 6379)))
+            ],
         },
     },
 }
